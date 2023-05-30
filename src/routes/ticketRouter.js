@@ -1,11 +1,6 @@
-const e = require("express");
 const express = require("express");
 const router = express.Router();
 const allTickets = require("../model/ticketsModel");
-const { ObjectId } = require("mongodb");
-
-const database = require("../../index");
-const { urlencoded } = require("body-parser");
 
 //get all
 router.get("/", async (req, res) => {
@@ -20,6 +15,7 @@ router.get("/", async (req, res) => {
 router.get("/:id", getTicket, async (req, res) => {
   try {
     //parse Int cz the data is returned as a string and Id is int type
+    //aggreigate with the $match searches based on your custom fields
     const id = parseInt(req.params.id);
     const ticket = await allTickets.aggregate([
       {
