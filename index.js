@@ -23,10 +23,11 @@ database.once("connected", () => {
 
 app = express();
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
+// create application/json parser
+var jsonParser = bodyParser.json();
 
 const ticketRouter = require("./src/routes/ticketRouter");
-app.use("/", ticketRouter);
+app.use("/", jsonParser, ticketRouter);
 
 app.listen(port, () => {
   console.log("running server on 3080");
