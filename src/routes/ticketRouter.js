@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const allTickets = require("../model/ticketsModel");
 
-//get all
+//get all tickets
 router.get("/", async (req, res) => {
   try {
     const allTicketsData = await allTickets.find();
@@ -31,23 +31,21 @@ router.get("/:id", getTicket, async (req, res) => {
   }
 });
 
-////posts
+////add ticket to all tickets
 router.post("/", async (req, res, next) => {
-  console.log("++++++++++++++post ticket++++++++++++++++");
-  //   console.log("collections+++++++++++=", database.collections.allTickets);
-  const ticket = new allTickets({
-    Id: req.body.Id,
-    boardId: req.body.boardId,
+  console.log("++++++++++++++post++++++++++++++++");
+  let ticket = new allTickets({
+    Id: parseInt(req.body.Id),
+    boardId: parseInt(req.body.boardId),
     title: req.body.title,
     details: req.body.details,
   });
-  try {
-    console.log(ticket);
-    const newTicket = await ticket.save();
 
-    res.status(201).json(newTicket);
+  try {
+    const ticketToSave = await ticket.save();
+    res.status(200).json(ticketToSave);
   } catch (e) {
-    res.status(401).json({ message: e.message });
+    res.status(400).json({ message: e.message });
   }
 });
 
