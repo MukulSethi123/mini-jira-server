@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const allTickets = require("../model/ticketsModel");
+const { Mongoose, default: mongoose } = require("mongoose");
 
 //get all tickets
 router.get("/", async (req, res) => {
@@ -46,6 +47,19 @@ router.post("/", async (req, res, next) => {
     res.status(200).json(ticketToSave);
   } catch (e) {
     res.status(400).json({ message: e.message });
+  }
+});
+
+//// delete tickets
+router.post("/delete/:id", async (req, res) => {
+  console.log("++++++++++++++delete post++++++++++++++++");
+  console.log(req.params.id);
+  try {
+    const id = req.params.id;
+    const data = await allTickets.deleteOne({ Id: id });
+    res.send(`Document with ${data} has been deleted..`);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
   }
 });
 
