@@ -63,6 +63,23 @@ router.post("/delete/:id", async (req, res) => {
   }
 });
 
+router.post("/update/", async (req, res) => {
+  console.log("++++++++++++++update post++++++++++++++++");
+  try {
+    const id = req.body.id;
+    const boardId = req.body.boardId;
+    const data = await allTickets.findOneAndUpdate(
+      { Id: id },
+      { boardId: boardId },
+      { returnOriginal: false }
+    );
+
+    res.send(`Document with ${data} has been updated..`);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 ///////middle ware//////
 // I forgot how this works exactly
 async function getTicket(req, res, next) {
