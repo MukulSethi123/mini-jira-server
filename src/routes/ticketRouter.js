@@ -80,6 +80,23 @@ router.post("/update/", async (req, res) => {
   }
 });
 
+router.post("/update/ticket-details", async (req, res) => {
+  console.log("++++++++++++++update post/details++++++++++++++++");
+  const filter = { Id: req.body.id };
+  const update = {
+    title: req.body.title,
+    details: req.body.details,
+  };
+  try {
+    const data = await allTickets.findOneAndUpdate(filter, update, {
+      returnOriginal: false,
+    });
+    res.send(`Ticket was Updated with ${data}`);
+  } catch (e) {
+    res.send(400).json({ message: error.message });
+  }
+});
+
 ///////middle ware//////
 // I forgot how this works exactly
 async function getTicket(req, res, next) {
