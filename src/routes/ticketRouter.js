@@ -82,7 +82,8 @@ router.post("/update/", async (req, res) => {
 
 router.post("/update/ticket-details", async (req, res) => {
   console.log("++++++++++++++update post/details++++++++++++++++");
-  const filter = { Id: req.body.id };
+  console.log(req.body);
+  const filter = { Id: req.body.Id };
   const update = {
     title: req.body.title,
     details: req.body.details,
