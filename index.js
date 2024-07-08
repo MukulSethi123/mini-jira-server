@@ -1,6 +1,6 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -22,6 +22,12 @@ database.once("connected", () => {
 //api related part
 
 app = express();
+// Define your whitelist (allowed origins)
+const whitelist = ["http://localhost:3080/"];
+
+app.use(cors());
+const bodyParser = require("body-parser");
+
 app.use(express.json());
 // create application/json parser
 var jsonParser = bodyParser.json();
